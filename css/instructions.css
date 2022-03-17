@@ -32,3 +32,8 @@
 .btn {
     font-size: 20px;
 }
+
+.dog, .bones {
+    width: 200px;
+    height: 200px;
+}
