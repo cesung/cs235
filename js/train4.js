@@ -33,8 +33,16 @@ const snackButtonOnClick = id => {
                 document.getElementById("pic2").src = healthySnacks[stage][1];
                 document.getElementById("name1").innerHTML = healthySnacks[stage][2];
             }
+            let curTime = new Date();
+            timeBetweenWrongAttempts.push((curTime.getTime() - prevTime.getTime())/1000);
+            prevTime = curTime;
+            numWrongAttempts += 1;
             isFlip = !isFlip;
         } else {
+            let timeEnd = new Date();
+            console.log("Time elapsed for whole page ", (timeEnd.getTime() - timeBegin.getTime()) / 1000, "seconds");
+            console.log("Number of wrong attempts ", numWrongAttempts);
+            console.log("Time elapsed between each wrong attempts ", timeBetweenWrongAttempts);
             audio.play();
             audio.onended = function() {
                 window.location.href = "../html/congratulations.html";
@@ -44,6 +52,10 @@ const snackButtonOnClick = id => {
         if ((id === "btn1" && !isFlip) ||
             (id === "btn2" && isFlip)
         ) {
+            let timeEnd = new Date();
+            console.log("Time elapsed for whole page ", (timeEnd.getTime() - timeBegin.getTime()) / 1000, "seconds");
+            console.log("Number of wrong attempts ", numWrongAttempts);
+            console.log("Time elapsed between each wrong attempts ", timeBetweenWrongAttempts);
             audio.play();
             audio.onended = function() {
                 window.location.href = "../html/congratulations.html";
@@ -62,6 +74,10 @@ const snackButtonOnClick = id => {
                 document.getElementById("pic2").src = unhealthySnacks[stage][1];
                 document.getElementById("name2").innerHTML = unhealthySnacks[stage][2];
             }
+            let curTime = new Date();
+            timeBetweenWrongAttempts.push((curTime.getTime() - prevTime.getTime())/1000);
+            prevTime = curTime;
+            numWrongAttempts += 1;
             isFlip = !isFlip;
         }
     }
@@ -71,6 +87,10 @@ let stage = 3;
 let flag;
 let isFlip = false;
 let audio = new Audio('../audio/correct.mp3');
+let timeBegin = new Date();
+let prevTime = timeBegin;
+let numWrongAttempts = 0;
+let timeBetweenWrongAttempts = [];
 
 window.onload = function() {
     document.getElementById(stage.toString()).style.visibility = "visible";
