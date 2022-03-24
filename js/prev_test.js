@@ -29,16 +29,20 @@ const snackButtonOnClick = id => {
 
     if (!button.style.borderColor) {
         if (numButtonSelected < 3) {
+            let curTime = new Date()
+            buttonClickTimestamp.push(curTime);
             button.style.border = "5px solid lightblue";
             numButtonSelected += 1
             snacksSelected.add(id);
             warningMessage.style.display = "none";
         } else {
+            numExceededSelected += 1;
             warningMessage = document.getElementById("warningMessage");
             warningMessage.innerHTML = "Oops! Choose up to three snacks";
             warningMessage.style.display = "block";
         }
     } else {
+        buttonClickTimestamp.pop();
         button.style.border = '';
         numButtonSelected -= 1
         snacksSelected.delete(id)
@@ -49,12 +53,16 @@ const snackButtonOnClick = id => {
 const submitButtonOnClick = () => {
 
     if (snacksSelected.size == 0) {
+        numSubmitWithoutSelected += 1;
         warningMessage = document.getElementById("warningMessage");
         warningMessage.innerHTML = "Oops! Choose at least one snack";
         warningMessage.style.display = "block";
         return ;
     }
 
+    let timeEnd = new Date();
+
+    // record selected snacks
     snacksSelectedIter = snacksSelected.values();
     while (true) {
         next = snacksSelectedIter.next()
@@ -64,6 +72,15 @@ const submitButtonOnClick = () => {
         console.log(snacks[next.value])
     }
 
+    console.log("Time elapsed for prev-test page ", (timeEnd.getTime() - timeBegin.getTime()) / 1000, "seconds");
+    console.log("Number of submission without any snacks selected ", numExceededSelected);
+    console.log("Number of exceeded selection (with 4+ selection) ", numSubmitWithoutSelected);
+    let timeBetweenButtonClick = []
+    for (let idx = 1; idx < buttonClickTimestamp.length; idx++) {
+        timeBetweenButtonClick.push((buttonClickTimestamp[idx].getTime() - buttonClickTimestamp[idx - 1].getTime()) / 1000);
+    }
+    console.log("Time elapsed between each button click ", timeBetweenButtonClick);
+
     window.location.href = "../html/instructions.html";
 }
 
@@ -71,12 +88,16 @@ let numButtonSelected = 0;
 let snacksSelected = new Set();
 let snacks;
 const numSnacks = 8;
+let timeBegin = new Date();
+let numSubmitWithoutSelected = 0;
+let numExceededSelected = 0;
+// add timeBegin for the left boundary
+let buttonClickTimestamp = [timeBegin];
 
 // on windows reload 
 window.onload = function() {
     
     snacks = healthySnacks.concat(unhealthySnacks)
-    console.log(snacks)
 
     // reset the selected button
     numButtonSelected = 0;
