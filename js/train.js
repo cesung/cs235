@@ -22,7 +22,7 @@ const snackButtonOnClick = id => {
             (id === "btn2" && isFlip)
         ) {
             //alert("Oops! Wrong Option!")
-            document.getElementById("warningMessage").style.visibility = "visible";
+            document.getElementById("bubble").style.visibility = "visible";
             if (!isFlip) {
                 document.getElementById("pic1").src = healthySnacks[stage][1];
                 document.getElementById("name1").innerHTML = healthySnacks[stage][2];
@@ -40,6 +40,7 @@ const snackButtonOnClick = id => {
             numWrongAttempts += 1;
             isFlip = !isFlip;
         } else {
+            document.getElementById("bubble").style.visibility = "hidden";
             let timeEnd = new Date();
             console.log("Time elapsed for whole page ", (timeEnd.getTime() - timeBegin.getTime()) / 1000, "seconds");
             console.log("Number of wrong attempts ", numWrongAttempts);
@@ -53,6 +54,7 @@ const snackButtonOnClick = id => {
         if ((id === "btn1" && !isFlip) ||
             (id === "btn2" && isFlip)
         ) {
+            document.getElementById("bubble").style.visibility = "hidden";
             let timeEnd = new Date();
             console.log("Time elapsed for whole page ", (timeEnd.getTime() - timeBegin.getTime()) / 1000, "seconds");
             console.log("Number of wrong attempts ", numWrongAttempts);
@@ -64,7 +66,7 @@ const snackButtonOnClick = id => {
             //window.location.href = "../html/train2.html";
         } else {
             //alert("Oops! Wrong Option!")
-            document.getElementById("warningMessage").style.visibility = "visible";
+            document.getElementById("bubble").style.visibility = "visible";
             if (!isFlip) {
                 document.getElementById("pic1").src = unhealthySnacks[stage][1];
                 document.getElementById("name1").innerHTML = unhealthySnacks[stage][2];

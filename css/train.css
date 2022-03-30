@@ -18,9 +18,18 @@ button {
     visibility: hidden;
 }
 
+.bubble {
+    height: 200px;
+    width: 200px;
+    margin-left: 155px;
+    margin-top: -130px;
+    visibility: hidden;
+}
+
 .bones {
     height: 100px;
     width: 100px;
+    margin-top: 80px;
 }
 
 .dog-and-bones {
