@@ -39,6 +39,7 @@ const snackButtonOnClick = id => {
             numWrongAttempts += 1;
             isFlip = !isFlip;
         } else {
+            setInterval(createBubble, 10);
             document.getElementById("bubble").style.visibility = "hidden";
             let timeEnd = new Date();
             console.log("Time elapsed for whole page ", (timeEnd.getTime() - timeBegin.getTime()) / 1000, "seconds");
@@ -53,6 +54,7 @@ const snackButtonOnClick = id => {
         if ((id === "btn1" && !isFlip) ||
             (id === "btn2" && isFlip)
         ) {
+            setInterval(createBubble, 10);
             document.getElementById("bubble").style.visibility = "hidden";
             let timeEnd = new Date();
             console.log("Time elapsed for whole page ", (timeEnd.getTime() - timeBegin.getTime()) / 1000, "seconds");
@@ -83,6 +85,25 @@ const snackButtonOnClick = id => {
             isFlip = !isFlip;
         }
     }
+}
+
+const createBubble = () => {
+    const section = document.querySelector('section')
+    const createElement = document.createElement('span')
+    let size = Math.random() * 60;
+
+    createElement.style.width = 20 + size + 'px';
+    createElement.style.height = 20 + size + 'px';
+    createElement.style.left = Math.random() * innerWidth + 'px';
+    const r = Math.random() * 255;
+    const g = Math.random() * 255;
+    const b = Math.random() * 255;
+    createElement.style.boxShadow = "inset 0 0 10px rgba(" + r + ", " + g + ", " + b + ", " + "0.5)";
+    section.appendChild(createElement);
+
+    setTimeout(() => {
+        createElement.remove();
+    }, 2000);
 }
 
 let stage = 1;
