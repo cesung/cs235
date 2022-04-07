@@ -81,6 +81,56 @@ const submitButtonOnClick = () => {
     }
     console.log("Time elapsed between each button click ", timeBetweenButtonClick);
 
+    output = [];
+    // selected snacks
+    // numSnackSelected
+    output.push([
+        "numSnackSelected", snacksSelected.size
+    ])
+    // snackType(healthy/unhealthy), snackName
+    snacksSelectedIter = snacksSelected.values();
+    while (true) {
+        next = snacksSelectedIter.next();
+        if (next.done) {
+            break;
+        }
+        output.push([
+            snacks[next.value][0],
+            snacks[next.value][2],
+        ]);
+    }
+
+    // duration
+    output.push([
+        "duration", (timeEnd.getTime() - timeBegin.getTime()) / 1000
+    ]);
+
+    // numExceededSelected
+    output.push([
+        "numExceededSelected", numExceededSelected
+    ]);
+
+    // numSubmitWithoutSelected
+    output.push([
+        "numSubmitWithoutSelected", numSubmitWithoutSelected
+    ]);
+
+    timeBetweenButtonClick.unshift("timeBetweenButtonClick")
+    // timeBetweenButtonClick
+    output.push(
+        timeBetweenButtonClick
+    );
+
+    /* File Name */
+    let filename = "prev_test_" + Date.now() + ".xlsx";
+    /* Sheet Name */
+    let sheetNname = "sheet1";
+    let workBook = XLSX.utils.book_new();
+    let workSheet = XLSX.utils.aoa_to_sheet(output);
+    /* Add workSheet to workBook */
+    XLSX.utils.book_append_sheet(workBook, workSheet, sheetNname);
+    XLSX.writeFile(workBook, filename);
+    
     window.location.href = "../html/instructions.html";
 }
 
